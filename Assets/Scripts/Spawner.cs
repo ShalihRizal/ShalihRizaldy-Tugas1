@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class Spawner : MonoBehaviour
 {
@@ -11,49 +12,69 @@ public class Spawner : MonoBehaviour
     [SerializeField]
     int remainingzombies, wave;
 
-    public TextMeshProUGUI wavetext;
-
-    public float lifespan;
+    public TextMeshProUGUI wavetext, waitText;
 
     [SerializeField]
     private Transform[] SpawnPoints;
 
     [SerializeField]
     private GameObject[] Obstacles;
-    
+
+    public GameObject WaitPanel;
+
+    //public Image bar;
+
+    //float am;
+
     void Update()
     {
         wavetext.text = "Wave " + wave.ToString();
+        //bar.fillAmount = am;
+        //Debug.Log(1 / remainingzombies);
     }
 
     void Start()
     {
-        InvokeRepeating("spawn", 0, spawnspeed);
+        StartCoroutine("spawn");
     }
 
-    void spawn()
+    IEnumerator spawn()
     {
-          GameObject obj = Instantiate(Obstacles[Random.Range(0, Obstacles.Length)], SpawnPoints[Random.Range(0, SpawnPoints.Length -1)].position, Quaternion.identity) as GameObject;
-        Destroy(obj, lifespan);
+        yield return new WaitForSeconds(spawnspeed);
+        GameObject obj = Instantiate(Obstacles[rand(0, Obstacles.Length)], SpawnPoints[rand(0, SpawnPoints.Length)].position, Quaternion.identity) as GameObject;
+        //Debug.Log(obj.gameObject.tag);
+        if (obj.gameObject.CompareTag("Zombie")){
+            remainingzombies--;
+        }
         Wave();
     }
 
     void Wave()
     {
-        remainingzombies--;
-
         if (remainingzombies <= 0)
         {
             wave++;
             remainingzombies = wave * 6 / 2;
-            spawnspeed -= 0.05f;
+            spawnspeed -= 0.075f;
+            //am = (float)1 / remainingzombies;
+            StartCoroutine("wait");
         }
+
+        StartCoroutine("spawn");
     }
 
-    //int rand(int min, int max)
-    //{
-    // int num = Random.Range(min, max);
-    //return num;
-    //}
+    IEnumerator wait()
+    {
+        waitText.text = "Wave " + wave.ToString() + " Begin";
+        WaitPanel.SetActive(true);
+        yield return new WaitForSeconds(.9f);
+        WaitPanel.SetActive(false);
+    }
+
+    int rand(int min, int max)
+    {
+        int num = Random.Range(min, max);
+        return num;
+    }
 
 }

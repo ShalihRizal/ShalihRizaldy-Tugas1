@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Zombie
   - Human
+  - DeathBox
   layers:
   - Default
   - TransparentFX

@@ -7,11 +7,17 @@ public class LevelManager : MonoBehaviour
 {
     public void Restart()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 
     public void Quit()
     {
         Application.Quit();
+        Debug.Log("Quitting");
+    }
+
+    public void MainMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 }
