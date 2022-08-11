@@ -12,19 +12,16 @@ public class Spawner : MonoBehaviour
     [SerializeField]
     int remainingzombies, wave;
 
-    public TextMeshProUGUI wavetext, waitText;
-
     [SerializeField]
     private Transform[] SpawnPoints;
 
     [SerializeField]
     private GameObject[] Obstacles;
 
+    [SerializeField]
+    UIManager uimanager;
+
     public GameObject WaitPanel;
-    void Update()
-    {
-        wavetext.text = "Wave " + wave.ToString();
-    }
 
     void Start()
     {
@@ -46,7 +43,7 @@ public class Spawner : MonoBehaviour
         if (remainingzombies <= 0)
         {
             wave++;
-            remainingzombies = wave * 6 / 2;
+            remainingzombies = (int) wave * 7 / 2;
             spawnspeed -= 0.075f;
             StartCoroutine("wait");
         }
@@ -56,7 +53,7 @@ public class Spawner : MonoBehaviour
 
     IEnumerator wait()
     {
-        waitText.text = "Wave " + wave.ToString() + " Begin";
+        uimanager.wait();
         WaitPanel.SetActive(true);
         yield return new WaitForSeconds(.9f);
         WaitPanel.SetActive(false);
@@ -66,6 +63,16 @@ public class Spawner : MonoBehaviour
     {
         int num = Random.Range(min, max);
         return num;
+    }
+
+    public int GetWave()
+    {
+        return wave;
+    }
+
+    public int GetRemainingZombies()
+    {
+        return remainingzombies;
     }
 
 }

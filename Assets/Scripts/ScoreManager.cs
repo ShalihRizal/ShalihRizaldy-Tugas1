@@ -21,4 +21,17 @@ public class ScoreManager : MonoBehaviour
     {
         score = score += amount;
     }
+
+    public void reduceScore(int amount)
+    {
+        score = score -= amount;
+    }
+
+    private void Update()
+    {
+        if(score <= 0)
+        {
+            score = 0;
+        }
+    }
 }

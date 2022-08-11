@@ -7,10 +7,17 @@ public class Zombie : Obstacles, IKillable, IOutsideAble
     ScoreManager scoremanager;
     HealthManager healthmanager;
 
+    [SerializeField]
+    private Sprite[] Faces;
+
     private void Awake()
     {
         scoremanager = GameObject.Find("Manager").GetComponent<ScoreManager>();
         healthmanager = GameObject.Find("Manager").GetComponent<HealthManager>();
+
+        SpriteRenderer rend = gameObject.GetComponent<SpriteRenderer>();
+        rend.sprite = Faces[Random.Range(0, Faces.Length)];
+
     }                                                                          
     private void Update()
     {
@@ -27,6 +34,7 @@ public class Zombie : Obstacles, IKillable, IOutsideAble
     public void die()
     {
         healthmanager.TakeDamage(1);
+        scoremanager.reduceScore(5);
         Destroy(gameObject);
     }
 }

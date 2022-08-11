@@ -26,7 +26,7 @@ public class Human : Obstacles, IKillable, IOutsideAble
 
     public void die()
     {
-        scoremanager.addScore(2);
+        scoremanager.addScore(3);
         Destroy(gameObject);
     }
 }

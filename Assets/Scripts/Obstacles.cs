@@ -17,11 +17,6 @@ public abstract class Obstacles : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-
-    }
-
     public void Move()
     {
         transform.Translate(Vector3.down * speed * Time.deltaTime);
