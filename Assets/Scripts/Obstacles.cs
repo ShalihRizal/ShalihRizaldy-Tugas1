@@ -2,42 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Obstacles : MonoBehaviour
+public abstract class Obstacles : MonoBehaviour
 {
     [SerializeField]
     private float speed;
 
-    void Awake()
+    public void Check()
     {
-        //player = GameObject.Find("Main Camera").GetComponent<Player>();
-    }
-
-    void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.CompareTag("DeathBox"))
+        Vector2 screenPosition = Camera.main.WorldToScreenPoint(transform.position);
+        if (screenPosition.y > Screen.width || screenPosition.y < 0)
         {
-            Destroy(gameObject);
-
-            if (gameObject.CompareTag("Human"))
-            {
-
-            }
+            IOutsideAble ioutside = gameObject.GetComponent<IOutsideAble>();
+            ioutside.die();
         }
     }
 
-    void OnDestroy()
+    private void Update()
     {
-        //Debug.Log("Its a Zombie");
+
     }
 
-    void Update()
+    public void Move()
     {
         transform.Translate(Vector3.down * speed * Time.deltaTime);
-
-        //if (transform.position.x >= -5)
-        //{
-        //    Debug.Log("Its Should be dead alr");
-        //}
     }
-
 }

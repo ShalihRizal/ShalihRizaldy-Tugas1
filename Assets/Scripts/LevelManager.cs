@@ -12,12 +12,17 @@ public class LevelManager : MonoBehaviour
 
     public void Quit()
     {
-        Application.Quit();
         Debug.Log("Quitting");
+        Application.Quit();
     }
 
     public void MainMenu()
     {
         SceneManager.LoadScene(0);
+    }
+
+    public void GameOver()
+    {
+        SceneManager.LoadScene(2);
     }
 }

@@ -21,16 +21,9 @@ public class Spawner : MonoBehaviour
     private GameObject[] Obstacles;
 
     public GameObject WaitPanel;
-
-    //public Image bar;
-
-    //float am;
-
     void Update()
     {
         wavetext.text = "Wave " + wave.ToString();
-        //bar.fillAmount = am;
-        //Debug.Log(1 / remainingzombies);
     }
 
     void Start()
@@ -41,8 +34,7 @@ public class Spawner : MonoBehaviour
     IEnumerator spawn()
     {
         yield return new WaitForSeconds(spawnspeed);
-        GameObject obj = Instantiate(Obstacles[rand(0, Obstacles.Length)], SpawnPoints[rand(0, SpawnPoints.Length)].position, Quaternion.identity) as GameObject;
-        //Debug.Log(obj.gameObject.tag);
+        GameObject obj = Instantiate(Obstacles[rand(0, Obstacles.Length)], SpawnPoints[rand(0, SpawnPoints.Length)].position, Quaternion.identity);
         if (obj.gameObject.CompareTag("Zombie")){
             remainingzombies--;
         }
@@ -56,7 +48,6 @@ public class Spawner : MonoBehaviour
             wave++;
             remainingzombies = wave * 6 / 2;
             spawnspeed -= 0.075f;
-            //am = (float)1 / remainingzombies;
             StartCoroutine("wait");
         }
 
